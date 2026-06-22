@@ -1,0 +1,1447 @@
+/* CSS Variables for Sewing & Yarn Theme */
+:root {
+  --canvas-cream: #faf6ee;
+  --hoop-wood: #d9b48f;
+  --hoop-wood-dark: #a8794e;
+  
+  --marker-ink: #2b2b2b;
+  --pencil-lead: #52525b;
+  
+  /* Fabric felt colors */
+  --felt-coral: #f8a594;
+  --felt-yellow: #fde047;
+  --felt-sage: #a7f3d0;
+  --felt-lavender: #d8b4fe;
+  --felt-blue: #bae6fd;
+  
+  /* Yarn colors */
+  --wool-orange: #ff7f50;
+  --wool-teal: #20b2aa;
+  --wool-purple: #ba55d3;
+  --wood-spool: #c19a6b;
+  
+  --font-handwritten: 'Patrick Hand', cursive, sans-serif;
+  --font-fun: 'Fredoka', sans-serif;
+
+  /* Responsive Tile Variables */
+  --tile-size: clamp(34px, 8.5vw, 46px);
+  --tile-gap: 5px;
+  --block-size: clamp(40px, 9.5vw, 50px);
+}
+
+/* Global Reset & Base Style */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background-color: #ecdab9;
+  background-image: 
+    radial-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 0),
+    radial-gradient(rgba(0, 0, 0, 0.03) 2px, transparent 0),
+    linear-gradient(rgba(139, 90, 43, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(139, 90, 43, 0.04) 1px, transparent 1px);
+  background-size: 20px 20px, 40px 40px, 10px 10px, 10px 10px;
+  color: var(--marker-ink);
+  font-family: var(--font-handwritten);
+  font-size: 1.25rem;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Paper/Fabric Texture overlay */
+.paper-texture-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.08;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* Single Viewport Container */
+.game-container {
+  max-width: 500px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+/* Utility classes */
+.hidden {
+  display: none !important;
+}
+
+/* --- TAPE DECORATIONS (Stitch Tape) --- */
+.tape {
+  position: absolute;
+  background-color: rgba(245, 236, 216, 0.85);
+  border: 1px dashed rgba(168, 121, 78, 0.5);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(1px);
+  z-index: 10;
+}
+.tape-top-left {
+  top: -8px;
+  left: -15px;
+  width: 70px;
+  height: 20px;
+  transform: rotate(-15deg);
+}
+.tape-top-right {
+  top: -8px;
+  right: -15px;
+  width: 80px;
+  height: 22px;
+  transform: rotate(20deg);
+}
+.tape-top {
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-1deg);
+  width: 90px;
+  height: 20px;
+}
+.tape-modal-top {
+  top: -10px;
+  left: 35%;
+  width: 110px;
+  height: 24px;
+  transform: rotate(-3deg);
+}
+.tape-victory {
+  top: -12px;
+  left: 50%;
+  width: 120px;
+  height: 26px;
+  transform: translateX(-50%) rotate(4deg);
+}
+.tape-reset {
+  top: -8px;
+  left: 35%;
+  width: 90px;
+  height: 20px;
+  transform: rotate(-4deg);
+}
+
+/* --- SEWING WOOD HEADER --- */
+.cardboard-header {
+  position: relative;
+  background-color: var(--hoop-wood);
+  border: 3.5px solid var(--marker-ink);
+  border-radius: 6px;
+  width: 100%;
+  padding: 6px 12px;
+  transform: rotate(-0.5deg);
+  box-shadow: 3px 3px 0 0 var(--marker-ink);
+  flex-shrink: 0;
+  z-index: 90;
+}
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 6px 8px;
+}
+.logo-title {
+  font-family: var(--font-fun);
+  font-size: 1.25rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--marker-ink);
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  white-space: nowrap;
+}
+.logo-sub {
+  font-family: var(--font-handwritten);
+  font-size: 0.85rem;
+  background-color: var(--felt-coral);
+  color: var(--marker-ink);
+  padding: 1px 5px;
+  border: 1.5px dashed var(--marker-ink);
+  border-radius: 2px;
+  transform: rotate(4deg);
+  display: inline-block;
+  margin-left: 2px;
+}
+.header-stats {
+  display: flex;
+  gap: 5px;
+}
+.stat-tag {
+  background-color: var(--canvas-cream);
+  border: 1.5px solid var(--marker-ink);
+  border-radius: 3px;
+  padding: 1px 5px;
+  font-family: var(--font-fun);
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  box-shadow: 1px 1px 0 0 var(--marker-ink);
+}
+.stat-value {
+  font-weight: bold;
+  font-size: 0.9rem;
+  background-color: rgba(255, 255, 255, 0.45);
+  padding: 0 4px;
+  border-radius: 2px;
+}
+.header-controls {
+  display: flex;
+  gap: 6px;
+}
+.btn-icon {
+  background-color: var(--canvas-cream);
+  border: 1.5px solid var(--marker-ink);
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  box-shadow: 1px 1.5px 0 0 var(--marker-ink);
+  transition: transform 0.1s;
+}
+.btn-icon:active {
+  transform: translate(1px, 1px);
+  box-shadow: 0 0 0 var(--marker-ink);
+}
+
+/* --- MAIN GAME LAYOUT --- */
+.game-board {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex-grow: 1;
+  height: calc(100% - 60px);
+  justify-content: space-between;
+}
+
+/* --- MASCOT COMPANION PANEL --- */
+.mascot-and-friends-panel {
+  position: relative;
+  background-color: #faf6ee;
+  background-image: radial-gradient(rgba(193, 154, 107, 0.1) 1.5px, transparent 0);
+  background-size: 16px 16px;
+  border: 3.5px solid var(--marker-ink);
+  border-radius: 6px;
+  padding: 6px 12px;
+  box-shadow: 3.5px 3.5px 0 0 var(--marker-ink);
+  min-height: 94px;
+  flex-shrink: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+}
+
+.friends-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  position: relative;
+}
+
+/* --- STRINGLY MASCOT (Yarn Ball) --- */
+.stringly-companion {
+  width: 60px;
+  height: 60px;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.stringly-body {
+  width: 50px;
+  height: 50px;
+  background-color: var(--wool-orange);
+  background-image: radial-gradient(circle, var(--wool-orange) 50%, #e25822 90%);
+  border: 2.8px solid var(--marker-ink);
+  border-radius: 50%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  z-index: 2;
+}
+
+/* Yarn wrapping layers */
+.yarn-wraps {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+}
+.yarn-wrap {
+  position: absolute;
+  border: 1.8px solid rgba(43, 43, 43, 0.25);
+  border-radius: 50%;
+}
+.wrap-1 {
+  top: 5px; left: -10px; width: 44px; height: 35px;
+  transform: rotate(30deg);
+}
+.wrap-2 {
+  bottom: 5px; right: -8px; width: 40px; height: 38px;
+  transform: rotate(-45deg);
+}
+.wrap-3 {
+  top: -10px; left: 10px; width: 30px; height: 44px;
+  transform: rotate(15deg);
+}
+
+/* Stringly face details */
+.stringly-face {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+}
+.stringly-eyes {
+  display: flex;
+  justify-content: space-around;
+  width: 65%;
+  margin-top: 4px;
+}
+.button-eye {
+  width: 11px;
+  height: 11px;
+  background-color: #2b2b2b;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.button-eye .stitch-cross {
+  width: 5px;
+  height: 5px;
+  position: relative;
+}
+.button-eye .stitch-cross::before,
+.button-eye .stitch-cross::after {
+  content: '';
+  position: absolute;
+  background-color: #fafaf9;
+  top: 2px;
+  left: 0;
+  width: 5px;
+  height: 1.2px;
+}
+.button-eye .stitch-cross::before {
+  transform: rotate(45deg);
+}
+.button-eye .stitch-cross::after {
+  transform: rotate(-45deg);
+}
+
+.stringly-mouth {
+  width: 10px;
+  height: 5px;
+  border-bottom: 2px solid var(--marker-ink);
+  border-radius: 0 0 7px 7px;
+  margin-top: 2px;
+}
+
+/* Wiggling leg strings */
+.stringly-leg {
+  position: absolute;
+  width: 4px;
+  height: 12px;
+  border: 2px solid var(--marker-ink);
+  border-top: none;
+  border-left: none;
+  bottom: -6px;
+  z-index: 1;
+}
+.leg-left {
+  left: 16px;
+  border-radius: 0 0 4px 0;
+  transform: rotate(15deg);
+}
+.leg-right {
+  right: 16px;
+  border-radius: 0 0 4px 0;
+  transform: rotate(-15deg);
+}
+
+/* Stringly Speech Bubble */
+.stringly-bubble {
+  position: absolute;
+  bottom: 58px;
+  left: 20px;
+  background-color: var(--canvas-cream);
+  border: 1.5px solid var(--marker-ink);
+  border-radius: 8px;
+  padding: 3px 8px;
+  width: 105px;
+  text-align: center;
+  font-size: 0.78rem;
+  box-shadow: 1.5px 1.5px 0 rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  line-height: 1.2;
+}
+.stringly-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 20%;
+  border-width: 6px 5px 0;
+  border-style: solid;
+  border-color: var(--marker-ink) transparent;
+  display: block;
+}
+.stringly-bubble::before {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 20%;
+  border-width: 4px 4px 0;
+  border-style: solid;
+  border-color: var(--canvas-cream) transparent;
+  display: block;
+  z-index: 11;
+}
+
+/* Decorative elements */
+.sewing-room-decor {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-family: var(--font-handwritten);
+  font-weight: bold;
+}
+.room-label {
+  font-size: 0.75rem;
+  background-color: var(--wool-teal);
+  color: white;
+  border: 1.5px solid var(--marker-ink);
+  border-radius: 2px;
+  padding: 1px 4px;
+  transform: rotate(-2deg);
+}
+.needle-art {
+  font-size: 1.4rem;
+  margin-top: 2px;
+  letter-spacing: 2px;
+}
+
+/* --- CENTER BOARD PANEL (Embroidery Hoop) --- */
+.board-panel {
+  flex-grow: 1;
+  background-color: #faf6ee;
+  border: 3.5px solid var(--marker-ink);
+  border-radius: 6px;
+  padding: 6px;
+  box-shadow: 3.5px 3.5px 0 0 var(--marker-ink);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  min-height: 220px;
+}
+
+/* Stretched linen hoop style */
+.embroidery-hoop {
+  width: 99%;
+  height: 99%;
+  border: 8px solid var(--hoop-wood);
+  box-shadow: 
+    inset 0 0 8px rgba(0,0,0,0.1),
+    1.5px 2px 0 var(--marker-ink),
+    0 0 0 2px var(--marker-ink),
+    inset 0 0 0 2px var(--marker-ink);
+  border-radius: 5px; /* Rounded card-hoop blend */
+  background-color: var(--canvas-cream);
+  position: relative;
+  overflow: hidden;
+}
+.hoop-inner-canvas {
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(rgba(193, 154, 107, 0.08) 1.5px, transparent 1.5px),
+    linear-gradient(90deg, rgba(193, 154, 107, 0.08) 1.5px, transparent 1.5px);
+  background-size: 14px 14px;
+  position: relative;
+}
+
+.word-grid-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding-left: 20px;
+  padding-top: 8px;
+}
+
+/* Felt Patch Tiles */
+.grid-tile {
+  position: absolute;
+  width: var(--tile-size);
+  height: var(--tile-size);
+  border: 2.2px dashed rgba(43, 43, 43, 0.7); /* Dashed stitch border */
+  border-radius: 6px;
+  background-color: var(--felt-sage);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-fun);
+  font-weight: bold;
+  font-size: clamp(1rem, 4.5vw, 1.45rem);
+  text-transform: uppercase;
+  color: var(--marker-ink);
+  box-shadow: 1.5px 1.5px 0 rgba(0, 0, 0, 0.15);
+  z-index: 5;
+  left: calc(var(--col) * (var(--tile-size) + var(--tile-gap)) + 24px);
+  top: calc(var(--row) * (var(--tile-size) + var(--tile-gap)) + 8px);
+  transition: left 0.5s cubic-bezier(0.25, 1, 0.5, 1), top 0.5s cubic-bezier(0.25, 1, 0.5, 1), transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.5s ease-in-out;
+}
+.grid-tile.vertical-tile {
+  background-color: var(--felt-coral);
+}
+.grid-tile.horizontal-tile {
+  background-color: var(--felt-yellow);
+}
+.grid-tile.intersect-tile {
+  background-color: var(--felt-lavender);
+  z-index: 6;
+}
+.grid-tile.fade-out {
+  opacity: 0;
+  transform: scale(0.25) rotate(-20deg);
+  pointer-events: none;
+}
+
+/* --- BOTTOM PANEL (Letter Blocks Spools) --- */
+.interaction-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background-color: var(--hoop-wood);
+  border: 3.5px solid var(--marker-ink);
+  border-radius: 6px;
+  padding: 10px;
+  box-shadow: 3px 3px 0 0 var(--marker-ink);
+  flex-shrink: 0;
+}
+.blocks-label {
+  font-family: var(--font-fun);
+  font-size: 0.85rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: var(--marker-ink);
+}
+.letter-blocks-pool {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  min-height: 66px;
+  padding: 4px 0;
+}
+
+/* Thread Spool Tile Layout */
+.letter-block {
+  position: relative;
+  width: var(--block-size);
+  height: calc(var(--block-size) * 1.22);
+  background: linear-gradient(90deg, var(--wool-teal) 15%, #5eead4 50%, var(--wool-teal) 85%);
+  border-left: 2.2px solid var(--marker-ink);
+  border-right: 2.2px solid var(--marker-ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-fun);
+  font-weight: bold;
+  font-size: clamp(1.2rem, 5vw, 1.6rem);
+  color: white;
+  text-shadow: 1.5px 1.5px 0 var(--marker-ink);
+  cursor: pointer;
+  z-index: 5;
+  transition: transform 0.1s, box-shadow 0.1s, opacity 0.25s;
+}
+/* Wood spool caps */
+.letter-block::before,
+.letter-block::after {
+  content: '';
+  position: absolute;
+  height: 6px;
+  background-color: var(--wood-spool);
+  border: 2.2px solid var(--marker-ink);
+  border-radius: 3px;
+  left: -4px;
+  right: -4px;
+  z-index: 6;
+}
+.letter-block::before {
+  top: -6px;
+}
+.letter-block::after {
+  bottom: -6px;
+}
+
+/* Alternating spool thread colors */
+.letter-blocks-pool .letter-block:nth-child(even) {
+  background: linear-gradient(90deg, var(--wool-orange) 15%, #ffb088 50%, var(--wool-orange) 85%);
+}
+.letter-blocks-pool .letter-block:nth-child(3n) {
+  background: linear-gradient(90deg, var(--wool-purple) 15%, #f472b6 50%, var(--wool-purple) 85%);
+}
+
+.letter-block:active {
+  transform: translateY(2px) scale(0.96);
+}
+.letter-block.selected {
+  opacity: 0.35;
+  pointer-events: none;
+  transform: scale(0.9) translateY(2px);
+  box-shadow: none;
+}
+
+/* Action buttons */
+.action-controls {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 2px;
+}
+.btn-craft {
+  font-family: var(--font-fun);
+  font-weight: bold;
+  text-transform: uppercase;
+  color: var(--marker-ink);
+  border: 2.5px solid var(--marker-ink);
+  border-radius: 6px;
+  cursor: pointer;
+  background-color: var(--canvas-cream);
+  box-shadow: 2px 2px 0 0 var(--marker-ink);
+  transition: transform 0.1s, box-shadow 0.1s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.btn-craft:active {
+  transform: translate(1.5px, 1.5px);
+  box-shadow: 0.5px 0.5px 0 var(--marker-ink);
+}
+.btn-medium {
+  padding: 8px 16px;
+  font-size: 0.95rem;
+  flex-grow: 1;
+}
+.btn-large {
+  padding: 10px 24px;
+  font-size: 1.15rem;
+  flex-grow: 2;
+}
+.btn-primary {
+  background-color: var(--felt-sage);
+}
+.btn-danger {
+  background-color: var(--felt-coral);
+}
+
+/* --- MODALS & OVERLAYS --- */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background-color: rgba(43, 43, 43, 0.45);
+  backdrop-filter: blur(3px);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px;
+}
+.modal-cardboard {
+  position: relative;
+  background-color: var(--hoop-wood);
+  border: 3.5px solid var(--marker-ink);
+  border-radius: 6px;
+  width: 100%;
+  max-width: 380px;
+  padding: 10px;
+  box-shadow: 
+    4px 4px 0 0 var(--marker-ink),
+    0px 10px 20px rgba(0,0,0,0.3);
+  animation: pop-up 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.2);
+}
+.notebook-sheet.home-sheet,
+.notebook-sheet.help-sheet {
+  background-color: var(--canvas-cream);
+  padding: 16px 16px 16px 28px;
+  background-image: 
+    linear-gradient(90deg, transparent 20px, var(--notebook-red-rule) 20px, var(--notebook-red-rule) 21px, transparent 21px);
+  background-size: 100% 100%;
+  height: auto;
+  overflow-y: auto;
+  max-height: 85vh;
+}
+
+.home-title {
+  font-family: var(--font-fun);
+  font-size: 2.2rem;
+  text-align: center;
+  margin-bottom: 8px;
+  border-bottom: 2px solid var(--marker-ink);
+  padding-bottom: 4px;
+  text-shadow: 1px 1px 0 white;
+}
+.home-mascot-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.welcome-speech {
+  background-color: white;
+  border: 1.5px solid var(--marker-ink);
+  border-radius: 8px;
+  padding: 8px;
+  font-size: 0.95rem;
+  line-height: 1.3;
+  box-shadow: 1.5px 1.5px 0 rgba(0,0,0,0.05);
+}
+
+.instructions-card {
+  background-color: rgba(0, 0, 0, 0.02);
+  border: 1.5px dashed rgba(168, 121, 78, 0.3);
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 14px;
+  font-size: 0.92rem;
+}
+.instructions-card h3 {
+  font-family: var(--font-fun);
+  font-size: 1rem;
+  margin-bottom: 4px;
+}
+.instructions-card ol {
+  padding-left: 14px;
+}
+.instructions-card li {
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+.score-legend {
+  display: flex;
+  gap: 6px;
+  margin-top: 4px;
+  flex-wrap: wrap;
+}
+.score-legend span {
+  font-family: var(--font-fun);
+  font-size: 0.72rem;
+  background-color: var(--felt-lavender);
+  border: 1px solid var(--marker-ink);
+  border-radius: 2px;
+  padding: 0 4px;
+}
+
+.pwa-banner {
+  background-color: var(--felt-yellow);
+  border: 1.8px dashed var(--marker-ink);
+  padding: 8px 10px;
+  border-radius: 4px;
+  margin-bottom: 12px;
+  font-size: 0.88rem;
+  position: relative;
+  line-height: 1.35;
+}
+.pwa-banner button {
+  display: block;
+  margin: 6px auto 0;
+}
+
+/* Victory / Game Over screen */
+.victory-cardboard {
+  background-color: var(--felt-yellow);
+  text-align: center;
+  max-width: 400px;
+}
+.victory-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.victory-title {
+  font-family: var(--font-fun);
+  font-size: 2.2rem;
+  color: var(--marker-ink);
+  text-shadow: 1.5px 1.5px 0 white;
+  animation: heartbeat 1s ease-in-out infinite alternate;
+}
+.victory-stats {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+}
+.vic-stat {
+  background-color: white;
+  border: 2px solid var(--marker-ink);
+  border-radius: 4px;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 2px 2px 0 0 var(--marker-ink);
+  flex-grow: 1;
+}
+.vic-stat-label {
+  font-size: 0.78rem;
+  color: var(--pencil-lead);
+  text-transform: uppercase;
+}
+.vic-stat-val {
+  font-family: var(--font-fun);
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+.victory-cheer {
+  font-size: 1rem;
+  font-style: italic;
+  background-color: var(--felt-lavender);
+  padding: 4px 10px;
+  border: 2px solid var(--marker-ink);
+  border-radius: 4px;
+  transform: rotate(-1deg);
+}
+
+/* Reset Modal */
+.reset-cardboard {
+  max-width: 320px;
+  background-color: var(--felt-coral);
+  text-align: center;
+}
+.reset-content h2 {
+  font-family: var(--font-fun);
+  margin-bottom: 6px;
+}
+.reset-content p {
+  font-size: 0.95rem;
+  margin-bottom: 12px;
+  line-height: 1.35;
+}
+.modal-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+/* --- DYNAMIC CELEBRATION MODALS (BOXY AND FRIENDS) --- */
+#celebration-6L.modal-overlay,
+#celebration-7L.modal-overlay {
+  background-color: rgba(43, 43, 43, 0.25);
+  backdrop-filter: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px 15px 40px 15px;
+  z-index: 10000;
+}
+
+#celebration-6L.modal-overlay.exit,
+#celebration-7L.modal-overlay.exit {
+  background-color: rgba(43, 43, 43, 0);
+  transition: background-color 0.4s ease;
+}
+
+.celebration-cardboard {
+  background-color: var(--canvas-cream);
+  border: 3.5px solid var(--marker-ink);
+  border-radius: 8px;
+  padding: 12px 24px;
+  text-align: center;
+  box-shadow: 4px 4px 0 var(--marker-ink);
+  position: relative;
+  max-width: 320px;
+  width: 90%;
+  transform: translateY(-200px);
+  animation: slide-sign-down 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+#celebration-6L.modal-overlay.exit .celebration-cardboard,
+#celebration-7L.modal-overlay.exit .celebration-cardboard {
+  animation: slide-sign-up 0.4s cubic-bezier(0.6, -0.28, 0.735, 0.045) forwards;
+}
+
+.celebration-title {
+  font-family: var(--font-fun);
+  font-size: 1.8rem;
+  color: var(--marker-ink);
+  margin-bottom: 2px;
+  text-shadow: 1px 1px 0 white;
+}
+
+.celebration-subtitle {
+  font-size: 0.95rem;
+  color: var(--pencil-lead);
+  margin-bottom: 0px;
+}
+
+#celebration-6L .celebration-spectators {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 20px;
+  width: 100%;
+  transform: translateY(200px);
+  animation: slide-spectators-up 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+#celebration-6L.modal-overlay.exit .celebration-spectators {
+  animation: slide-spectators-down 0.4s cubic-bezier(0.6, -0.28, 0.735, 0.045) forwards;
+}
+
+/* Copy of Boxy friends styles for the celebration pop-up */
+.celebration-spectators .boxy-friend {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  animation: friend-jump 0.35s ease-in-out infinite alternate;
+}
+.celebration-spectators .boxy-friend.roxy {
+  animation-delay: 0s;
+}
+.celebration-spectators .boxy-friend.toxy {
+  animation-delay: 0.1s;
+}
+.celebration-spectators .boxy-friend.foxy {
+  animation-delay: 0.2s;
+}
+
+@keyframes friend-jump {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-12px); }
+}
+
+.celebration-spectators .boxy-friend .friend-body {
+  border: 3px solid var(--marker-ink);
+  box-shadow: 2px 2px 0 var(--marker-ink);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.celebration-spectators .boxy-friend .friend-eyes {
+  display: flex;
+  justify-content: space-around;
+  width: 60%;
+  margin-bottom: 3px;
+}
+
+.celebration-spectators .boxy-friend .friend-eye {
+  width: 5px;
+  height: 5px;
+  background-color: var(--marker-ink);
+  border-radius: 50%;
+}
+
+.celebration-spectators .boxy-friend .friend-mouth {
+  width: 10px;
+  height: 5px;
+  border-bottom: 2px solid var(--marker-ink);
+  border-radius: 0 0 5px 5px;
+}
+
+.celebration-spectators .boxy-friend .friend-label {
+  font-family: var(--font-handwritten);
+  font-size: 0.8rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: var(--marker-ink);
+  margin-top: 4px;
+  background: white;
+  padding: 1px 4px;
+  border: 1px solid var(--marker-ink);
+  border-radius: 4px;
+  box-shadow: 1px 1px 0 var(--marker-ink);
+}
+
+.celebration-spectators .boxy-friend.roxy {
+  width: 44px;
+}
+.celebration-spectators .boxy-friend.roxy .friend-body {
+  background-color: #bae6fd;
+  border-radius: 12px 12px 6px 6px;
+  width: 40px;
+  height: 54px;
+}
+
+.celebration-spectators .boxy-friend.toxy {
+  width: 48px;
+}
+.celebration-spectators .boxy-friend.toxy .friend-body-diamond {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  background-color: #fbcfe8;
+  border: 3px solid var(--marker-ink);
+  box-shadow: 2px 2px 0 var(--marker-ink);
+  transform: rotate(45deg);
+  margin-bottom: 12px;
+}
+.celebration-spectators .boxy-friend.toxy .friend-face-container {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  transform: rotate(-45deg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.celebration-spectators .boxy-friend.toxy .friend-mouth.open {
+  width: 5px;
+  height: 5px;
+  border: 2px solid var(--marker-ink);
+  border-radius: 50%;
+  background-color: var(--marker-ink);
+}
+
+.celebration-spectators .boxy-friend.foxy {
+  width: 56px;
+}
+.celebration-spectators .boxy-friend.foxy .friend-body {
+  background-color: #fef08a;
+  border-radius: 6px;
+  width: 56px;
+  height: 36px;
+}
+.celebration-spectators .boxy-friend.foxy .friend-mouth.flat {
+  width: 8px;
+  height: 0;
+  border-bottom: 2px solid var(--marker-ink);
+}
+
+/* --- Boxy Crossover (7L) --- */
+.boxy-celebration-card {
+  background-color: var(--felt-yellow) !important;
+}
+
+.large-boxy {
+  width: 100px;
+  height: 120px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 30px;
+}
+
+#celebration-7L .large-boxy {
+  transform: translateY(-450px);
+  animation: parachute-down 1.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards,
+             boxy-dance 0.4s ease-in-out 1.6s infinite alternate;
+}
+
+#celebration-7L.modal-overlay.exit .large-boxy {
+  animation: slide-boxy-down 0.4s cubic-bezier(0.6, -0.28, 0.735, 0.045) forwards;
+}
+
+.large-boxy .boxy-body {
+  width: 76px;
+  height: 72px;
+  background-color: #d9b48f; /* cardboard brown */
+  border: 3.5px solid var(--marker-ink);
+  border-radius: 8px;
+  box-shadow: inset -4px -4px 0 rgba(0,0,0,0.1), 3px 3px 0 rgba(0, 0, 0, 0.15);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.large-boxy .box-face {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.large-boxy .box-eyes {
+  display: flex;
+  justify-content: space-around;
+  width: 60%;
+  margin-top: 10px;
+}
+
+.large-boxy .box-eye {
+  width: 14px;
+  height: 14px;
+  background-color: #fafaf9;
+  border: 2.5px solid var(--marker-ink);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.large-boxy .box-eye .pupil {
+  width: 6px;
+  height: 6px;
+  background-color: var(--marker-ink);
+  border-radius: 50%;
+}
+
+.large-boxy .box-mouth.smile {
+  width: 20px;
+  height: 10px;
+  border-bottom: 3px solid var(--marker-ink);
+  border-radius: 0 0 12px 12px;
+  margin-top: 6px;
+}
+
+.large-boxy .box-cheeks {
+  position: absolute;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 8px;
+  top: 36px;
+  pointer-events: none;
+}
+.large-boxy .box-cheeks::before,
+.large-boxy .box-cheeks::after {
+  content: '';
+  display: block;
+  width: 8px;
+  height: 5px;
+  background-color: var(--felt-coral);
+  border-radius: 50%;
+  opacity: 0.8;
+}
+
+.large-boxy .box-flap {
+  position: absolute;
+  width: 32px;
+  height: 12px;
+  background-color: #c49970; /* slightly darker cardboard */
+  border: 2.5px solid var(--marker-ink);
+  top: -8px;
+  z-index: 3;
+}
+.large-boxy .flap-left {
+  left: 4px;
+  border-radius: 4px 4px 0 0;
+  transform: rotate(-25deg);
+  transform-origin: bottom left;
+}
+.large-boxy .flap-right {
+  right: 4px;
+  border-radius: 4px 4px 0 0;
+  transform: rotate(25deg);
+  transform-origin: bottom right;
+}
+
+.large-boxy .boxy-arm {
+  position: absolute;
+  width: 6px;
+  height: 28px;
+  background-color: var(--marker-ink);
+  border-radius: 3px;
+  top: 45px;
+  z-index: 1;
+}
+.large-boxy .arm-left {
+  left: -2px;
+  transform-origin: top center;
+  animation: wave-arm-l 0.35s ease-in-out infinite alternate;
+}
+.large-boxy .arm-right {
+  right: -2px;
+  transform-origin: top center;
+  animation: wave-arm-r 0.35s ease-in-out infinite alternate;
+}
+
+@keyframes wave-arm-l {
+  0% { transform: rotate(15deg); }
+  100% { transform: rotate(65deg); }
+}
+@keyframes wave-arm-r {
+  0% { transform: rotate(-15deg); }
+  100% { transform: rotate(-65deg); }
+}
+
+.large-boxy .boxy-legs {
+  display: flex;
+  justify-content: space-around;
+  width: 44px;
+  height: 18px;
+  position: relative;
+  z-index: 1;
+}
+.large-boxy .boxy-leg {
+  width: 6px;
+  height: 18px;
+  background-color: var(--marker-ink);
+  border-radius: 3px;
+}
+
+/* Parachute design */
+.large-boxy .parachute {
+  position: absolute;
+  top: -70px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 60px;
+  pointer-events: none;
+  z-index: 1;
+}
+.large-boxy .parachute-canopy {
+  width: 100px;
+  height: 50px;
+  background-color: var(--felt-coral);
+  background-image: linear-gradient(90deg, 
+    #ff7f50 0%, #ff7f50 33%, 
+    #fafaf9 33%, #fafaf9 66%, 
+    #ff7f50 66%, #ff7f50 100%
+  );
+  border: 3px solid var(--marker-ink);
+  border-radius: 100px 100px 0 0;
+  box-shadow: 2px 2px 0 rgba(0,0,0,0.15);
+}
+.large-boxy .parachute-string {
+  position: absolute;
+  width: 2.5px;
+  height: 25px;
+  background-color: var(--marker-ink);
+  top: 48px;
+}
+.large-boxy .parachute-string.string-left {
+  left: 12px;
+  transform: rotate(22deg);
+  transform-origin: top left;
+}
+.large-boxy .parachute-string.string-right {
+  right: 12px;
+  transform: rotate(-22deg);
+  transform-origin: top right;
+}
+
+@keyframes parachute-deflate {
+  0% { transform: scale(1) translateX(-50%); opacity: 1; }
+  100% { transform: scale(0.2) translateY(20px) translateX(-180%); opacity: 0; }
+}
+.large-boxy .parachute {
+  animation: parachute-deflate 0.6s ease-in-out 1.6s forwards;
+}
+
+/* --- Confetti and Sign animations --- */
+#confetti-canvas {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 10;
+}
+
+@keyframes slide-sign-down {
+  from { transform: translateY(-200px); }
+  to { transform: translateY(0); }
+}
+
+@keyframes slide-sign-up {
+  from { transform: translateY(0); }
+  to { transform: translateY(-200px); }
+}
+
+@keyframes slide-spectators-up {
+  from { transform: translateY(200px); }
+  to { transform: translateY(0); }
+}
+
+@keyframes slide-spectators-down {
+  from { transform: translateY(0); }
+  to { transform: translateY(200px); }
+}
+
+@keyframes parachute-down {
+  0% { transform: translateY(-450px) rotate(-12deg); }
+  25% { transform: translateY(-280px) rotate(12deg) translateX(-15px); }
+  50% { transform: translateY(-150px) rotate(-8deg) translateX(15px); }
+  75% { transform: translateY(-40px) rotate(6deg) translateX(-8px); }
+  100% { transform: translateY(0) rotate(0deg) translateX(0); }
+}
+
+@keyframes boxy-dance {
+  0% { transform: translateY(0) scale(1, 1); }
+  100% { transform: translateY(-20px) scale(1.04, 0.96); }
+}
+
+@keyframes slide-boxy-down {
+  from { transform: translateY(0); }
+  to { transform: translateY(400px); }
+}
+
+/* --- MASCOT COMPANION STATES & ANIMATIONS --- */
+@keyframes stringly-breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(0.96, 1.04) translateY(-1px); }
+}
+@keyframes stringly-wobble {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-5deg); }
+  75% { transform: rotate(5deg); }
+}
+@keyframes stringly-jump {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-10px); }
+}
+@keyframes yarn-rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.stringly-companion.idle {
+  animation: stringly-breathe 3s ease-in-out infinite;
+}
+.stringly-companion.idle .leg-left {
+  animation: stringly-wobble 3s ease-in-out infinite;
+}
+.stringly-companion.idle .leg-right {
+  animation: stringly-wobble 3s ease-in-out infinite;
+  animation-delay: 1.5s;
+}
+.stringly-companion.happy {
+  animation: stringly-jump 0.35s ease-in-out infinite alternate;
+}
+.stringly-companion.happy .stringly-body {
+  animation: yarn-rotate 2s linear infinite;
+}
+.stringly-companion.dizzy {
+  animation: stringly-wobble 0.15s linear infinite;
+}
+.stringly-companion.dizzy .stringly-body {
+  transform: scale(0.92);
+}
+.stringly-companion.sad {
+  animation: stringly-breathe 1.5s ease-in-out infinite;
+}
+.stringly-companion.sad .stringly-mouth {
+  border-bottom: none;
+  border-top: 2px solid var(--marker-ink);
+  border-radius: 7px 7px 0 0;
+  margin-top: 3px;
+}
+
+/* --- KEYFRAME ANIMATIONS --- */
+@keyframes pop-up {
+  from { transform: scale(0.85); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+@keyframes heartbeat {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.06); }
+}
+@keyframes jump {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-8px); }
+}
+
+/* --- MOBILE SPECIFIC VIEWPORT OPTIMIZATIONS --- */
+@media screen and (max-height: 600px) {
+  .game-container {
+    padding: 6px;
+    gap: 4px;
+  }
+  .mascot-and-friends-panel {
+    min-height: 70px;
+    padding: 4px 8px;
+  }
+  .stringly-companion {
+    width: 44px;
+    height: 44px;
+  }
+  .stringly-body {
+    width: 36px;
+    height: 36px;
+  }
+  .stringly-eyes {
+    width: 60%;
+  }
+  .button-eye {
+    width: 8px;
+    height: 8px;
+  }
+  .button-eye .stitch-cross {
+    width: 3px;
+    height: 3px;
+  }
+  .button-eye .stitch-cross::before,
+  .button-eye .stitch-cross::after {
+    width: 3px;
+  }
+  .stringly-leg {
+    height: 8px;
+    bottom: -4px;
+  }
+  .board-panel {
+    min-height: 160px;
+  }
+  .embroidery-hoop {
+    border-width: 5px;
+  }
+  .hoop-inner-canvas {
+    background-size: 11px 11px;
+  }
+  .word-grid-container {
+    padding-left: 14px;
+  }
+  .grid-tile {
+    left: calc(var(--col) * (var(--tile-size) + var(--tile-gap)) + 14px);
+  }
+  .interaction-panel {
+    padding: 6px;
+    gap: 4px;
+  }
+  .letter-blocks-pool {
+    min-height: 48px;
+  }
+}
+
+/* Notch safe area margins */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .game-container {
+    padding-bottom: calc(10px + env(safe-area-inset-bottom));
+    padding-top: calc(10px + env(safe-area-inset-top));
+  }
+}

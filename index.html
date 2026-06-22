@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>WordString - Sewing Edition</title>
+  <!-- Google Fonts for handwriting/crafty feel -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Patrick+Hand&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=2">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#c19a6b">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="icon.svg">
+</head>
+<body>
+  <!-- Fabric linen overlay texture -->
+  <div class="paper-texture-overlay"></div>
+
+  <div class="game-container">
+    <!-- Header: Wooden Sewing Label -->
+    <header class="cardboard-header">
+      <div class="tape tape-top-left"></div>
+      <div class="tape tape-top-right"></div>
+      <div class="header-content">
+        <h1 class="logo-title">Word<span class="logo-sub">String</span></h1>
+        
+        <div class="header-stats">
+          <div class="stat-tag">
+            <span class="stat-label">Score:</span>
+            <span id="total-score" class="stat-value">0</span>
+          </div>
+          <div class="stat-tag" id="timer-tag">
+            <span class="stat-label">Time:</span>
+            <span id="game-timer" class="stat-value">1:00</span>
+          </div>
+          <div class="stat-tag">
+            <span class="stat-label">High:</span>
+            <span id="high-score" class="stat-value">0</span>
+          </div>
+        </div>
+
+        <div class="header-controls">
+          <button id="btn-sound" class="btn-icon" aria-label="Toggle Sound">🔊</button>
+          <button id="btn-help" class="btn-icon" aria-label="How to Play">❓</button>
+          <button id="btn-reset" class="btn-icon" aria-label="Reset Game">🔄</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Game Board (No scroll single screen layout) -->
+    <main class="game-board">
+      
+      <!-- Top Section: Companion Stringly (the Yarn mascot) -->
+      <section class="mascot-and-friends-panel">
+        <div class="tape tape-top"></div>
+        
+        <div class="friends-container">
+          <!-- Stringly Companion -->
+          <div id="stringly-companion" class="stringly-companion idle">
+            <div class="stringly-body">
+              <div class="yarn-wraps">
+                <div class="yarn-wrap wrap-1"></div>
+                <div class="yarn-wrap wrap-2"></div>
+                <div class="yarn-wrap wrap-3"></div>
+              </div>
+              <div class="stringly-face">
+                <div class="stringly-eyes">
+                  <div class="button-eye eye-left">
+                    <div class="stitch-cross"></div>
+                  </div>
+                  <div class="button-eye eye-right">
+                    <div class="stitch-cross"></div>
+                  </div>
+                </div>
+                <div class="stringly-mouth"></div>
+              </div>
+            </div>
+            <!-- Loose yarn string ends for legs -->
+            <div class="stringly-leg leg-left"></div>
+            <div class="stringly-leg leg-right"></div>
+            
+            <!-- Speech Bubble -->
+            <div id="stringly-bubble" class="stringly-bubble hidden">
+              <span id="stringly-bubble-text">Stitch words!</span>
+            </div>
+          </div>
+          
+          <div class="sewing-room-decor">
+            <span class="room-label">Sewing Room</span>
+            <span class="needle-art">📍🧵🪡</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Center Section: Embroidery Hoop Board (Cross-stitch linen frame) -->
+      <section class="board-panel">
+        <div class="embroidery-hoop">
+          <div class="hoop-inner-canvas">
+            <div id="word-grid-container" class="word-grid-container">
+              <!-- Felt patch letter tiles dynamically spawned here -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Bottom Section: Letter Blocks Spools & Controls -->
+      <section class="interaction-panel">
+        <div class="blocks-label">Thread Spools (Tap to use):</div>
+        <div id="letter-blocks-pool" class="letter-blocks-pool">
+          <!-- Spool tiles are spawned here -->
+        </div>
+
+        <div class="action-controls">
+          <button id="btn-clear" class="btn-craft btn-danger btn-medium">Clear</button>
+          <button id="btn-shuffle" class="btn-craft btn-medium">Shuffle</button>
+          <button id="btn-submit" class="btn-craft btn-primary btn-large">SUBMIT</button>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Welcome / Home Screen Modal -->
+  <div id="home-screen" class="modal-overlay">
+    <div class="modal-cardboard">
+      <div class="tape tape-modal-top"></div>
+      <div class="notebook-sheet home-sheet">
+        <h2 class="home-title">Word<span class="logo-sub">String</span></h2>
+        
+        <div class="home-mascot-row">
+          <!-- Stringly Mascot -->
+          <div class="stringly-companion idle">
+            <div class="stringly-body">
+              <div class="yarn-wraps">
+                <div class="yarn-wrap wrap-1"></div>
+                <div class="yarn-wrap wrap-2"></div>
+                <div class="yarn-wrap wrap-3"></div>
+              </div>
+              <div class="stringly-face">
+                <div class="stringly-eyes">
+                  <div class="button-eye eye-left"><div class="stitch-cross"></div></div>
+                  <div class="button-eye eye-right"><div class="stitch-cross"></div></div>
+                </div>
+                <div class="stringly-mouth"></div>
+              </div>
+            </div>
+            <div class="stringly-leg leg-left"></div>
+            <div class="stringly-leg leg-right"></div>
+          </div>
+          
+          <div class="welcome-speech">
+            <span>Hi! I'm Stringly. Let's stitch some words together!</span>
+          </div>
+        </div>
+
+        <div class="instructions-card">
+          <h3>How to Play:</h3>
+          <ol>
+            <li>You start with a <strong>vertical starter word</strong> and <strong>6 thread spool letter blocks</strong>.</li>
+            <li>Spell a new word horizontally starting with the <strong>last letter</strong> of the starter word.</li>
+            <li>You must use <strong>2 or more</strong> of the thread spools!</li>
+            <li>Spools are fixed during a turn, allowing you to easily unscramble 7-letter words!</li>
+            <li>Longer words score much higher points:
+              <div class="score-legend">
+                <span>3L = 1pt</span> <span>4L = 3pt</span> <span>5L = 5pt</span> <span>6L = 9pt</span> <span>7L = 15pt</span>
+              </div>
+            </li>
+            <li>Start with <strong>1 minute</strong>. Each correct word adds <strong>+30 seconds</strong>!</li>
+          </ol>
+        </div>
+
+        <div id="pwa-banner" class="pwa-banner hidden">
+          <div class="tape tape-install"></div>
+          <p>📦 Experience is better when downloaded as an app! Play offline with full performance.</p>
+          <button id="btn-pwa-install" class="btn-craft btn-small btn-primary">INSTALL APP</button>
+        </div>
+
+        <button id="btn-start" class="btn-craft btn-large btn-primary">START STITCHING</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Help Modal -->
+  <div id="help-modal" class="modal-overlay hidden">
+    <div class="modal-cardboard">
+      <div class="tape tape-modal-top"></div>
+      <div class="notebook-sheet help-sheet">
+        <h2>Instructions</h2>
+        <p>Build words horizontally using the <strong>last letter</strong> of the vertical starter word and the 6 thread spools below.</p>
+        <p><strong>Rules:</strong></p>
+        <ul>
+          <li>Must use at least 2 blocks.</li>
+          <li>Max word length is 7 letters.</li>
+          <li>Each correct word adds +30s.</li>
+          <li>Undo individual letters by tapping them on the hoop!</li>
+        </ul>
+        <button id="btn-close-help" class="btn-craft btn-medium btn-primary">Got it!</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reset Confirmation Modal -->
+  <div id="reset-modal" class="modal-overlay hidden">
+    <div class="modal-cardboard reset-cardboard">
+      <div class="tape tape-reset"></div>
+      <div class="reset-content">
+        <h2>Reset Game?</h2>
+        <p>Are you sure you want to end this run and restart?</p>
+        <div class="modal-actions">
+          <button id="btn-confirm-reset" class="btn-craft btn-danger btn-medium">Yes, Reset</button>
+          <button id="btn-cancel-reset" class="btn-craft btn-medium">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Game Over Modal -->
+  <div id="game-over-modal" class="modal-overlay hidden">
+    <div class="modal-cardboard victory-cardboard">
+      <div class="tape tape-victory"></div>
+      <div class="victory-content">
+        <h2 class="victory-title">Time's Up!</h2>
+        <p>You did a great job stitching words!</p>
+        
+        <div class="victory-stats">
+          <div class="vic-stat">
+            <span class="vic-stat-label">Final Score</span>
+            <span id="final-score" class="vic-stat-val">0</span>
+          </div>
+          <div class="vic-stat">
+            <span class="vic-stat-label">Words Made</span>
+            <span id="words-made" class="vic-stat-val">0</span>
+          </div>
+          <div class="vic-stat">
+            <span class="vic-stat-label">Longest Word</span>
+            <span id="longest-word" class="vic-stat-val">-</span>
+          </div>
+        </div>
+
+        <p class="victory-cheer">Stringly is proud of you! 🪡🧶</p>
+        <button id="btn-play-again" class="btn-craft btn-large btn-primary">PLAY AGAIN</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6-Letter Celebration Modal (Roxy, Toxy, Foxy Guest Appearance) -->
+  <div id="celebration-6L" class="modal-overlay hidden">
+    <div class="celebration-cardboard">
+      <div class="tape tape-modal-top"></div>
+      <h2 class="celebration-title">6-Letter Word!</h2>
+      <p class="celebration-subtitle">Boxy's friends came to party!</p>
+      <div class="celebration-spectators">
+        <div class="boxy-friend roxy dancing">
+          <div class="friend-body">
+            <div class="friend-eyes">
+              <div class="friend-eye"></div>
+              <div class="friend-eye"></div>
+            </div>
+            <div class="friend-mouth smile"></div>
+          </div>
+          <span class="friend-label">Roxy</span>
+        </div>
+        <div class="boxy-friend toxy dancing">
+          <div class="friend-body-diamond">
+            <div class="friend-face-container">
+              <div class="friend-eyes">
+                <div class="friend-eye"></div>
+                <div class="friend-eye"></div>
+              </div>
+              <div class="friend-mouth open"></div>
+            </div>
+          </div>
+          <span class="friend-label">Toxy</span>
+        </div>
+        <div class="boxy-friend foxy dancing">
+          <div class="friend-body">
+            <div class="friend-eyes">
+              <div class="friend-eye"></div>
+              <div class="friend-eye"></div>
+            </div>
+            <div class="friend-mouth flat"></div>
+          </div>
+          <span class="friend-label">Foxy</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7-Letter Celebration Modal (Boxy Guest Appearance) -->
+  <div id="celebration-7L" class="modal-overlay hidden">
+    <div class="celebration-cardboard boxy-celebration-card">
+      <div class="tape tape-victory"></div>
+      <h2 class="celebration-title">🎉 7-Letter Word! 🎉</h2>
+      <p class="celebration-subtitle">Boxy arrived to cheer for you!</p>
+      
+      <div class="boxy-mascot happy large-boxy">
+        <!-- CSS Parachute -->
+        <div class="parachute">
+          <div class="parachute-canopy"></div>
+          <div class="parachute-string string-left"></div>
+          <div class="parachute-string string-right"></div>
+        </div>
+        <div class="boxy-arm arm-left"></div>
+        <div class="boxy-body">
+          <div class="box-face">
+            <div class="box-eyes">
+              <div class="box-eye eye-left"><div class="pupil"></div></div>
+              <div class="box-eye eye-right"><div class="pupil"></div></div>
+            </div>
+            <div class="box-mouth smile"></div>
+            <div class="box-cheeks"></div>
+          </div>
+          <div class="box-flap flap-left"></div>
+          <div class="box-flap flap-right"></div>
+        </div>
+        <div class="boxy-arm arm-right"></div>
+        <div class="boxy-legs">
+          <div class="boxy-leg leg-left"></div>
+          <div class="boxy-leg leg-right"></div>
+        </div>
+      </div>
+      
+      <!-- Canvas for rain confetti -->
+      <canvas id="confetti-canvas"></canvas>
+    </div>
+  </div>
+
+  <script src="words.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>
