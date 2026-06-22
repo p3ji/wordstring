@@ -12,7 +12,7 @@ WordString is a responsive, offline-first Progressive Web App (PWA) word puzzle 
 * **Shift Transition**: On submitting a correct word, the horizontal spelled tiles diagonally rotate and translate to become the new vertical starter column.
 * **Timer & Score**:
   * You start with **1 minute**.
-  * Each valid word submitted adds a **+30 seconds** time bonus.
+  * Words of **5 or more letters** add a **+15 seconds** time bonus.
   * Score increases based on word length:
     * 3 letters = 1 point
     * 4 letters = 3 points
