@@ -428,28 +428,7 @@ body {
   z-index: 11;
 }
 
-/* Decorative elements */
-.sewing-room-decor {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  font-family: var(--font-handwritten);
-  font-weight: bold;
-}
-.room-label {
-  font-size: 0.75rem;
-  background-color: var(--wool-teal);
-  color: white;
-  border: 1.5px solid var(--marker-ink);
-  border-radius: 2px;
-  padding: 1px 4px;
-  transform: rotate(-2deg);
-}
-.needle-art {
-  font-size: 1.4rem;
-  margin-top: 2px;
-  letter-spacing: 2px;
-}
+
 
 /* --- CENTER BOARD PANEL (Embroidery Hoop) --- */
 .board-panel {

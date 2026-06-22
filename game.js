@@ -416,9 +416,11 @@
     totalScore += pts;
     if (scoreVal) scoreVal.textContent = totalScore;
     
-    // Add time bonus: +30 seconds
-    timeLeft += 30;
-    if (timerVal) timerVal.textContent = formatTime(timeLeft);
+    // Add time bonus: only words of 5+ letters gain +15 seconds
+    if (word.length >= 5) {
+      timeLeft += 15;
+      if (timerVal) timerVal.textContent = formatTime(timeLeft);
+    }
     
     // Check if we should trigger guest celebrations
     if (word.length === 6) {
