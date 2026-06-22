@@ -1083,21 +1083,14 @@ body {
 }
 
 .large-boxy .box-eye {
-  width: 14px;
-  height: 14px;
-  background-color: #fafaf9;
-  border: 2.5px solid var(--marker-ink);
+  width: 10px;
+  height: 10px;
+  background-color: var(--marker-ink);
   border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .large-boxy .box-eye .pupil {
-  width: 6px;
-  height: 6px;
-  background-color: var(--marker-ink);
-  border-radius: 50%;
+  display: none;
 }
 
 .large-boxy .box-mouth.smile {
