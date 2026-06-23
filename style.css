@@ -147,11 +147,13 @@ body::before {
   flex-shrink: 0;
   z-index: 90;
 }
+/* Two-row header: [Logo ---- Icons] / [Score  Time  High] */
 .header-content {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  gap: 6px 8px;
+  gap: 3px 0;
 }
 .logo-title {
   font-family: var(--font-fun);
@@ -163,6 +165,7 @@ body::before {
   align-items: center;
   gap: 3px;
   white-space: nowrap;
+  order: 1;
 }
 .logo-sub {
   font-family: var(--font-handwritten);
@@ -176,17 +179,26 @@ body::before {
   display: inline-block;
   margin-left: 2px;
 }
-.header-stats {
+.header-controls {
   display: flex;
-  gap: 5px;
+  gap: 6px;
+  order: 2;
+}
+/* Stats span the full second row */
+.header-stats {
+  order: 3;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 6px;
 }
 .stat-tag {
   background-color: var(--canvas-cream);
   border: 1.5px solid var(--brass-dark);
   border-radius: 3px;
-  padding: 1px 5px;
+  padding: 1px 7px;
   font-family: var(--font-fun);
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   display: flex;
   align-items: center;
   gap: 3px;
@@ -194,14 +206,10 @@ body::before {
 }
 .stat-value {
   font-weight: bold;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   background-color: rgba(255, 255, 255, 0.45);
   padding: 0 4px;
   border-radius: 2px;
-}
-.header-controls {
-  display: flex;
-  gap: 6px;
 }
 .btn-icon {
   background: radial-gradient(circle at 38% 30%, var(--brass-light), var(--brass) 52%, var(--brass-dark) 100%);
