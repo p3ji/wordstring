@@ -1,10 +1,10 @@
-const CACHE_NAME = 'wordstring-v1';
+const CACHE_NAME = 'wordstring-v3';
 const ASSETS = [
   './',
   './index.html',
-  './style.css',
-  './game.js',
-  './words.js',
+  './style.css?v=3',
+  './game.js?v=3',
+  './words.js?v=3',
   './icon.svg',
   './manifest.json'
 ];

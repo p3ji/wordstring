@@ -291,6 +291,9 @@
     for (let col = 1; col <= spelledWord.length; col++) {
       const tile = document.createElement('div');
       tile.className = 'grid-tile horizontal-tile';
+      if (col === spelledWord.length) {
+        tile.classList.add('tile-stitch-in');
+      }
       tile.textContent = spelledWord[col - 1].letter;
       tile.style.setProperty('--col', col);
       tile.style.setProperty('--row', Ls - 1);
@@ -726,10 +729,15 @@
   const pwaBanner = document.getElementById('pwa-banner');
   const installBtn = document.getElementById('btn-pwa-install');
 
+  // The app tip is always visible; if already running installed, hide it entirely.
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+  if (isStandalone && pwaBanner) pwaBanner.classList.add('hidden');
+
   window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
-    if (pwaBanner) pwaBanner.classList.remove('hidden');
+    // Reveal the one-tap install button only when the browser supports it.
+    if (installBtn) installBtn.classList.remove('hidden');
   });
 
   if (installBtn) {
@@ -742,7 +750,7 @@
           console.log('User accepted the PWA install');
         }
         deferredPrompt = null;
-        if (pwaBanner) pwaBanner.classList.add('hidden');
+        if (installBtn) installBtn.classList.add('hidden');
       });
     });
   }

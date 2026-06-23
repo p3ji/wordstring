@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Patrick+Hand&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=2">
+  <link rel="stylesheet" href="style.css?v=3">
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#c19a6b">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -22,8 +22,6 @@
   <div class="game-container">
     <!-- Header: Wooden Sewing Label -->
     <header class="cardboard-header">
-      <div class="tape tape-top-left"></div>
-      <div class="tape tape-top-right"></div>
       <div class="header-content">
         <h1 class="logo-title">Word<span class="logo-sub">String</span></h1>
         
@@ -43,9 +41,9 @@
         </div>
 
         <div class="header-controls">
-          <button id="btn-sound" class="btn-icon" aria-label="Toggle Sound">🔊</button>
-          <button id="btn-help" class="btn-icon" aria-label="How to Play">❓</button>
-          <button id="btn-reset" class="btn-icon" aria-label="Reset Game">🔄</button>
+          <button id="btn-highscore" class="btn-icon" aria-label="High Scores">🏆</button>
+          <button id="btn-history" class="btn-icon" aria-label="Word History">📜</button>
+          <button id="btn-settings" class="btn-icon" aria-label="Settings">⚙️</button>
         </div>
       </div>
     </header>
@@ -55,7 +53,6 @@
       
       <!-- Top Section: Companion Stringly (the Yarn mascot) -->
       <section class="mascot-and-friends-panel">
-        <div class="tape tape-top"></div>
         
         <div class="friends-container">
           <!-- Stringly Companion -->
@@ -121,7 +118,6 @@
   <!-- Welcome / Home Screen Modal -->
   <div id="home-screen" class="modal-overlay">
     <div class="modal-cardboard">
-      <div class="tape tape-modal-top"></div>
       <div class="notebook-sheet home-sheet">
         <h2 class="home-title">Word<span class="logo-sub">String</span></h2>
         
@@ -154,23 +150,18 @@
         <div class="instructions-card">
           <h3>How to Play:</h3>
           <ol>
-            <li>You start with a <strong>vertical starter word</strong> and <strong>6 thread spool letter blocks</strong>.</li>
-            <li>Spell a new word horizontally starting with the <strong>last letter</strong> of the starter word.</li>
-            <li>You must use <strong>2 or more</strong> of the thread spools!</li>
-            <li>Spools are fixed during a turn, allowing you to easily unscramble 7-letter words!</li>
-            <li>Longer words score much higher points:
+            <li>Spell a new word using the <strong>last letter</strong> of the previous word.</li>
+            <li>Spell <strong>longer words</strong> to score higher points!
               <div class="score-legend">
                 <span>3L = 1pt</span> <span>4L = 3pt</span> <span>5L = 5pt</span> <span>6L = 9pt</span> <span>7L = 15pt</span>
               </div>
             </li>
-            <li>Start with <strong>1 minute</strong>. Words of <strong>5 or more letters</strong> add <strong>+15 seconds</strong>!</li>
           </ol>
         </div>
 
-        <div id="pwa-banner" class="pwa-banner hidden">
-          <div class="tape tape-install"></div>
-          <p>📦 Experience is better when downloaded as an app! Play offline with full performance.</p>
-          <button id="btn-pwa-install" class="btn-craft btn-small btn-primary">INSTALL APP</button>
+        <div id="pwa-banner" class="pwa-banner">
+          <p>📲 <strong>Best experience:</strong> add WordString to your home screen to play full-screen and offline, just like a real app.</p>
+          <button id="btn-pwa-install" class="btn-craft btn-small btn-primary hidden">INSTALL APP</button>
         </div>
 
         <button id="btn-start" class="btn-craft btn-large btn-primary">START STITCHING</button>
@@ -181,7 +172,6 @@
   <!-- Help Modal -->
   <div id="help-modal" class="modal-overlay hidden">
     <div class="modal-cardboard">
-      <div class="tape tape-modal-top"></div>
       <div class="notebook-sheet help-sheet">
         <h2>Instructions</h2>
         <p>Build words horizontally using the <strong>last letter</strong> of the vertical starter word and the 6 thread spools below.</p>
@@ -197,10 +187,59 @@
     </div>
   </div>
 
+  <!-- Settings Modal -->
+  <div id="settings-modal" class="modal-overlay hidden">
+    <div class="modal-cardboard">
+      <div class="settings-content">
+        <h2>Settings</h2>
+        <button id="btn-settings-sound" class="settings-row">
+          <span>🔊 Sound</span><span id="settings-sound-state" class="settings-state">ON</span>
+        </button>
+        <button id="btn-settings-help" class="settings-row">
+          <span>❓ How to Play</span><span>›</span>
+        </button>
+        <button id="btn-settings-reset" class="settings-row">
+          <span>🔄 Reset Game</span><span>›</span>
+        </button>
+        <button id="btn-force-update" class="settings-row">
+          <span>⬇️ Force Update</span><span>›</span>
+        </button>
+        <a href="https://n-1game.vercel.app/" target="_blank" rel="noopener" class="settings-row settings-link">
+          <span>🎮 Try the n-1 Game</span><span>↗</span>
+        </a>
+        <button id="btn-close-settings" class="btn-craft btn-medium btn-primary">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Word History Modal -->
+  <div id="history-modal" class="modal-overlay hidden">
+    <div class="modal-cardboard">
+      <div class="history-content">
+        <h2>Word History</h2>
+        <p class="history-sub">Every word you've ever stitched.</p>
+        <ul id="history-list" class="history-list"></ul>
+        <div id="history-empty" class="history-empty hidden">No words yet — start stitching!</div>
+        <button id="btn-close-history" class="btn-craft btn-medium btn-primary">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- High Scores Modal -->
+  <div id="highscore-modal" class="modal-overlay hidden">
+    <div class="modal-cardboard">
+      <div class="highscore-content">
+        <h2>High Scores</h2>
+        <div class="hs-row"><span>🏆 Your Best</span><span id="hs-local">0</span></div>
+        <p class="hs-note">🌐 Online leaderboard coming soon!</p>
+        <button id="btn-close-highscore" class="btn-craft btn-medium btn-primary">Close</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Reset Confirmation Modal -->
   <div id="reset-modal" class="modal-overlay hidden">
     <div class="modal-cardboard reset-cardboard">
-      <div class="tape tape-reset"></div>
       <div class="reset-content">
         <h2>Reset Game?</h2>
         <p>Are you sure you want to end this run and restart?</p>
@@ -215,7 +254,6 @@
   <!-- Game Over Modal -->
   <div id="game-over-modal" class="modal-overlay hidden">
     <div class="modal-cardboard victory-cardboard">
-      <div class="tape tape-victory"></div>
       <div class="victory-content">
         <h2 class="victory-title">Time's Up!</h2>
         <p>You did a great job stitching words!</p>
@@ -244,7 +282,6 @@
   <!-- 6-Letter Celebration Modal (Roxy, Toxy, Foxy Guest Appearance) -->
   <div id="celebration-6L" class="modal-overlay hidden">
     <div class="celebration-cardboard">
-      <div class="tape tape-modal-top"></div>
       <h2 class="celebration-title">6-Letter Word!</h2>
       <p class="celebration-subtitle">Boxy's friends came to party!</p>
       <div class="celebration-spectators">
@@ -287,7 +324,6 @@
   <!-- 7-Letter Celebration Modal (Boxy Guest Appearance) -->
   <div id="celebration-7L" class="modal-overlay hidden">
     <div class="celebration-cardboard boxy-celebration-card">
-      <div class="tape tape-victory"></div>
       <h2 class="celebration-title">🎉 7-Letter Word! 🎉</h2>
       <p class="celebration-subtitle">Boxy arrived to cheer for you!</p>
       
@@ -323,7 +359,7 @@
     </div>
   </div>
 
-  <script src="words.js"></script>
-  <script src="game.js"></script>
+  <script src="words.js?v=3"></script>
+  <script src="game.js?v=3"></script>
 </body>
 </html>

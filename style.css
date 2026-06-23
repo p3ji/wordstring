@@ -4,8 +4,17 @@
   --hoop-wood: #d9b48f;
   --hoop-wood-dark: #a8794e;
   
-  --marker-ink: #2b2b2b;
-  --pencil-lead: #52525b;
+  --marker-ink: #3a2817;
+  --pencil-lead: #6b5640;
+
+  /* Antique brass & wood accents */
+  --brass: #c69a45;
+  --brass-light: #ecd08a;
+  --brass-dark: #8a5e22;
+  --brass-line: #6e4716;
+  --wood-dark: #9a6a37;
+  --notebook-red-rule: #c47a64;
+  --screw: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Ccircle cx='10' cy='10.4' r='8.4' fill='%236e4716'/%3E%3Ccircle cx='10' cy='9.4' r='7.4' fill='%23caa24f'/%3E%3Ccircle cx='10' cy='8.8' r='4.6' fill='%23ecd08a'/%3E%3Cline x1='5.6' y1='12' x2='14.4' y2='7.8' stroke='%236e4716' stroke-width='1.7' stroke-linecap='round'/%3E%3C/svg%3E");
   
   /* Fabric felt colors */
   --felt-coral: #f8a594;
@@ -18,7 +27,7 @@
   --wool-orange: #ff7f50;
   --wool-teal: #20b2aa;
   --wool-purple: #ba55d3;
-  --wood-spool: #c19a6b;
+  --wood-spool: #b5824c;
   
   --font-handwritten: 'Patrick Hand', cursive, sans-serif;
   --font-fun: 'Fredoka', sans-serif;
@@ -40,7 +49,7 @@
 }
 
 body {
-  background-color: #ecdab9;
+  background-color: #e7d2a6;
   background-image: 
     radial-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 0),
     radial-gradient(rgba(0, 0, 0, 0.03) 2px, transparent 0),
@@ -54,6 +63,17 @@ body {
   width: 100vw;
   overflow: hidden;
   position: relative;
+}
+
+/* Aged parchment vignette (darkened, foxed edges) */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse at 50% 34%, transparent 48%, rgba(74, 42, 14, 0.10) 80%, rgba(58, 32, 10, 0.28) 100%);
 }
 
 /* Paper/Fabric Texture overlay */
@@ -86,68 +106,46 @@ body {
   display: none !important;
 }
 
-/* --- TAPE DECORATIONS (Stitch Tape) --- */
-.tape {
+/* --- BRASS CORNER SCREWS (replaces stitch tape) --- */
+.cardboard-header,
+.mascot-and-friends-panel,
+.board-panel,
+.interaction-panel,
+.modal-cardboard,
+.celebration-cardboard {
+  position: relative;
+}
+.cardboard-header::after,
+.mascot-and-friends-panel::after,
+.board-panel::after,
+.interaction-panel::after,
+.modal-cardboard::after,
+.celebration-cardboard::after {
+  content: "";
   position: absolute;
-  background-color: rgba(245, 236, 216, 0.85);
-  border: 1px dashed rgba(168, 121, 78, 0.5);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-  backdrop-filter: blur(1px);
-  z-index: 10;
-}
-.tape-top-left {
-  top: -8px;
-  left: -15px;
-  width: 70px;
-  height: 20px;
-  transform: rotate(-15deg);
-}
-.tape-top-right {
-  top: -8px;
-  right: -15px;
-  width: 80px;
-  height: 22px;
-  transform: rotate(20deg);
-}
-.tape-top {
-  top: -12px;
-  left: 50%;
-  transform: translateX(-50%) rotate(-1deg);
-  width: 90px;
-  height: 20px;
-}
-.tape-modal-top {
-  top: -10px;
-  left: 35%;
-  width: 110px;
-  height: 24px;
-  transform: rotate(-3deg);
-}
-.tape-victory {
-  top: -12px;
-  left: 50%;
-  width: 120px;
-  height: 26px;
-  transform: translateX(-50%) rotate(4deg);
-}
-.tape-reset {
-  top: -8px;
-  left: 35%;
-  width: 90px;
-  height: 20px;
-  transform: rotate(-4deg);
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background-image: var(--screw), var(--screw), var(--screw), var(--screw);
+  background-repeat: no-repeat;
+  background-position: left 6px top 6px, right 6px top 6px, left 6px bottom 6px, right 6px bottom 6px;
+  background-size: 12px 12px;
+  z-index: 30;
 }
 
 /* --- SEWING WOOD HEADER --- */
 .cardboard-header {
   position: relative;
   background-color: var(--hoop-wood);
-  border: 3.5px solid var(--marker-ink);
-  border-radius: 6px;
+  background-image:
+    repeating-linear-gradient(91deg, rgba(106, 71, 22, 0.06) 0 3px, rgba(255, 250, 235, 0.04) 3px 9px),
+    linear-gradient(180deg, rgba(255, 248, 230, 0.18), rgba(94, 60, 24, 0.16));
+  border: 3px solid var(--brass-dark);
+  border-radius: 7px;
   width: 100%;
-  padding: 6px 12px;
-  transform: rotate(-0.5deg);
-  box-shadow: 3px 3px 0 0 var(--marker-ink);
+  padding: 7px 14px;
+  transform: rotate(-0.4deg);
+  box-shadow: 0 3px 7px rgba(58, 32, 12, 0.34), inset 0 0 0 1.4px var(--brass-light);
   flex-shrink: 0;
   z-index: 90;
 }
@@ -186,7 +184,7 @@ body {
 }
 .stat-tag {
   background-color: var(--canvas-cream);
-  border: 1.5px solid var(--marker-ink);
+  border: 1.5px solid var(--brass-dark);
   border-radius: 3px;
   padding: 1px 5px;
   font-family: var(--font-fun);
@@ -194,7 +192,7 @@ body {
   display: flex;
   align-items: center;
   gap: 3px;
-  box-shadow: 1px 1px 0 0 var(--marker-ink);
+  box-shadow: 0 1px 2px rgba(58, 32, 12, 0.3);
 }
 .stat-value {
   font-weight: bold;
@@ -208,8 +206,8 @@ body {
   gap: 6px;
 }
 .btn-icon {
-  background-color: var(--canvas-cream);
-  border: 1.5px solid var(--marker-ink);
+  background: radial-gradient(circle at 38% 30%, var(--brass-light), var(--brass) 52%, var(--brass-dark) 100%);
+  border: 1.5px solid var(--brass-line);
   border-radius: 50%;
   width: 28px;
   height: 28px;
@@ -218,7 +216,7 @@ body {
   align-items: center;
   justify-content: center;
   font-size: 0.9rem;
-  box-shadow: 1px 1.5px 0 0 var(--marker-ink);
+  box-shadow: 0 1.5px 3px rgba(58, 32, 12, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.4);
   transition: transform 0.1s;
 }
 .btn-icon:active {
@@ -239,13 +237,13 @@ body {
 /* --- MASCOT COMPANION PANEL --- */
 .mascot-and-friends-panel {
   position: relative;
-  background-color: #faf6ee;
-  background-image: radial-gradient(rgba(193, 154, 107, 0.1) 1.5px, transparent 0);
+  background-color: #f6efdb;
+  background-image: radial-gradient(rgba(140, 96, 48, 0.12) 1.5px, transparent 0);
   background-size: 16px 16px;
-  border: 3.5px solid var(--marker-ink);
-  border-radius: 6px;
+  border: 3px solid var(--brass-dark);
+  border-radius: 7px;
   padding: 6px 12px;
-  box-shadow: 3.5px 3.5px 0 0 var(--marker-ink);
+  box-shadow: 0 3px 7px rgba(58, 32, 12, 0.3), inset 0 0 0 1.4px var(--brass-light);
   min-height: 94px;
   flex-shrink: 0;
   z-index: 10;
@@ -433,11 +431,11 @@ body {
 /* --- CENTER BOARD PANEL (Embroidery Hoop) --- */
 .board-panel {
   flex-grow: 1;
-  background-color: #faf6ee;
-  border: 3.5px solid var(--marker-ink);
-  border-radius: 6px;
+  background-color: #f6efdb;
+  border: 3px solid var(--brass-dark);
+  border-radius: 7px;
   padding: 6px;
-  box-shadow: 3.5px 3.5px 0 0 var(--marker-ink);
+  box-shadow: 0 3px 7px rgba(58, 32, 12, 0.3), inset 0 0 0 1.4px var(--brass-light);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -451,10 +449,10 @@ body {
   height: 99%;
   border: 8px solid var(--hoop-wood);
   box-shadow: 
-    inset 0 0 8px rgba(0,0,0,0.1),
-    1.5px 2px 0 var(--marker-ink),
-    0 0 0 2px var(--marker-ink),
-    inset 0 0 0 2px var(--marker-ink);
+    inset 0 0 8px rgba(70, 40, 12, 0.18),
+    0 2px 5px rgba(58, 32, 12, 0.3),
+    0 0 0 2px var(--brass-line),
+    inset 0 0 0 2px var(--brass-line);
   border-radius: 5px; /* Rounded card-hoop blend */
   background-color: var(--canvas-cream);
   position: relative;
@@ -483,7 +481,7 @@ body {
   position: absolute;
   width: var(--tile-size);
   height: var(--tile-size);
-  border: 2.2px dashed rgba(43, 43, 43, 0.7); /* Dashed stitch border */
+  border: 2.2px dashed rgba(58, 40, 23, 0.7); /* Dashed stitch border */
   border-radius: 6px;
   background-color: var(--felt-sage);
   display: flex;
@@ -516,16 +514,50 @@ body {
   pointer-events: none;
 }
 
+/* Thread "stitch" connecting each letter to the one before it */
+.grid-tile.horizontal-tile::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: calc(-1 * var(--tile-gap) - 3px);
+  width: calc(var(--tile-gap) + 6px);
+  border-top: 2.5px dashed var(--wool-teal);
+  transform: translateY(-50%);
+  z-index: 4;
+  pointer-events: none;
+}
+
+/* A freshly added letter drops in on the thread with a little swing */
+.grid-tile.horizontal-tile.tile-stitch-in {
+  animation: tile-stitch-in 0.42s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.grid-tile.horizontal-tile.tile-stitch-in::after {
+  animation: thread-pull 0.42s ease-out;
+}
+@keyframes tile-stitch-in {
+  0% { opacity: 0; transform: translateY(-18px) rotate(-7deg) scale(0.9); }
+  70% { opacity: 1; transform: translateY(1px) rotate(2deg) scale(1.03); }
+  100% { transform: translateY(0) rotate(0) scale(1); }
+}
+@keyframes thread-pull {
+  0% { width: 0; opacity: 0; }
+  60% { opacity: 1; }
+  100% { width: calc(var(--tile-gap) + 6px); }
+}
+
 /* --- BOTTOM PANEL (Letter Blocks Spools) --- */
 .interaction-panel {
   display: flex;
   flex-direction: column;
   gap: 8px;
   background-color: var(--hoop-wood);
-  border: 3.5px solid var(--marker-ink);
-  border-radius: 6px;
+  background-image:
+    repeating-linear-gradient(91deg, rgba(106, 71, 22, 0.06) 0 3px, rgba(255, 250, 235, 0.04) 3px 9px),
+    linear-gradient(180deg, rgba(255, 248, 230, 0.16), rgba(94, 60, 24, 0.18));
+  border: 3px solid var(--brass-dark);
+  border-radius: 7px;
   padding: 10px;
-  box-shadow: 3px 3px 0 0 var(--marker-ink);
+  box-shadow: 0 3px 7px rgba(58, 32, 12, 0.32), inset 0 0 0 1.4px var(--brass-light);
   flex-shrink: 0;
 }
 .blocks-label {
@@ -534,6 +566,8 @@ body {
   font-weight: bold;
   text-transform: uppercase;
   color: var(--marker-ink);
+  margin-left: 18px;
+  letter-spacing: 0.5px;
 }
 .letter-blocks-pool {
   display: flex;
@@ -614,11 +648,11 @@ body {
   font-weight: bold;
   text-transform: uppercase;
   color: var(--marker-ink);
-  border: 2.5px solid var(--marker-ink);
+  border: 2.5px solid var(--brass-dark);
   border-radius: 6px;
   cursor: pointer;
   background-color: var(--canvas-cream);
-  box-shadow: 2px 2px 0 0 var(--marker-ink);
+  box-shadow: 0 2px 4px rgba(58, 32, 12, 0.32), inset 0 1px 0 rgba(255, 250, 235, 0.35);
   transition: transform 0.1s, box-shadow 0.1s;
   display: flex;
   align-items: center;
@@ -637,6 +671,10 @@ body {
   padding: 10px 24px;
   font-size: 1.15rem;
   flex-grow: 2;
+}
+.btn-small {
+  padding: 5px 14px;
+  font-size: 0.82rem;
 }
 .btn-primary {
   background-color: var(--felt-sage);
@@ -661,14 +699,17 @@ body {
 .modal-cardboard {
   position: relative;
   background-color: var(--hoop-wood);
-  border: 3.5px solid var(--marker-ink);
-  border-radius: 6px;
+  background-image:
+    repeating-linear-gradient(91deg, rgba(106, 71, 22, 0.06) 0 3px, rgba(255, 250, 235, 0.04) 3px 9px),
+    linear-gradient(180deg, rgba(255, 248, 230, 0.16), rgba(94, 60, 24, 0.18));
+  border: 3px solid var(--brass-dark);
+  border-radius: 7px;
   width: 100%;
   max-width: 380px;
   padding: 10px;
-  box-shadow: 
-    4px 4px 0 0 var(--marker-ink),
-    0px 10px 20px rgba(0,0,0,0.3);
+  box-shadow:
+    0 10px 24px rgba(40, 22, 8, 0.45),
+    inset 0 0 0 1.4px var(--brass-light);
   animation: pop-up 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.2);
 }
 .notebook-sheet.home-sheet,
@@ -856,11 +897,11 @@ body {
 
 .celebration-cardboard {
   background-color: var(--canvas-cream);
-  border: 3.5px solid var(--marker-ink);
+  border: 3px solid var(--brass-dark);
   border-radius: 8px;
   padding: 12px 24px;
   text-align: center;
-  box-shadow: 4px 4px 0 var(--marker-ink);
+  box-shadow: 0 8px 20px rgba(40, 22, 8, 0.4), inset 0 0 0 1.4px var(--brass-light);
   position: relative;
   max-width: 320px;
   width: 90%;
