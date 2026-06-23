@@ -1,3 +1,11 @@
+// --- SUPABASE CONFIGURATION ---
+const SUPABASE_URL = "https://heldymuibtnngfuubhlv.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhlbGR5bXVpYnRubmdmdXViaGx2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIxNDM0MzcsImV4cCI6MjA5NzcxOTQzN30.FjVEuBy-fYOPcWyyggYAaCETr--RoerFpQ0W-cNxf4M";
+let supabaseClient = null;
+if (typeof supabase !== 'undefined') {
+  supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+}
+
 // WordString - Core Game Controller (Sewing Edition)
 (function() {
   // --- Game State Variables ---
@@ -209,6 +217,14 @@
 
     setStringlyState('sad');
     gameOverModal.classList.remove('hidden');
+
+    // Reset submission form
+    const nameInput = document.getElementById('player-name-input');
+    const submitBtn = document.getElementById('btn-submit-score');
+    const statusEl = document.getElementById('leaderboard-status');
+    if (nameInput) { nameInput.value = ''; nameInput.disabled = false; }
+    if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Submit'; }
+    if (statusEl) { statusEl.className = 'leaderboard-status hidden'; }
   }
 
   // --- Round setup & Generation ---
@@ -630,18 +646,15 @@
     startGame();
   });
 
-  document.getElementById('btn-help').addEventListener('click', () => {
-    playSound('tap');
-    helpModal.classList.remove('hidden');
-  });
   document.getElementById('btn-close-help').addEventListener('click', () => {
     playSound('tap');
     helpModal.classList.add('hidden');
   });
 
-  document.getElementById('btn-reset').addEventListener('click', () => {
+  document.getElementById('btn-settings-reset').addEventListener('click', () => {
     playSound('tap');
     if (!isGameActive) return;
+    document.getElementById('settings-modal').classList.add('hidden');
     clearInterval(timerInterval);
     resetModal.classList.remove('hidden');
   });
@@ -667,11 +680,58 @@
     submitWord();
   });
 
-  const soundBtn = document.getElementById('btn-sound');
-  soundBtn.addEventListener('click', () => {
+  document.getElementById('btn-settings-sound').addEventListener('click', () => {
     isSoundOn = !isSoundOn;
-    soundBtn.textContent = isSoundOn ? '🔊' : '🔇';
+    document.getElementById('settings-sound-state').textContent = isSoundOn ? 'ON' : 'OFF';
     playSound('tap');
+  });
+
+  // Header icon controls
+  document.getElementById('btn-highscore').addEventListener('click', () => {
+    playSound('tap');
+    openLeaderboard('today');
+  });
+  document.getElementById('btn-history').addEventListener('click', () => {
+    playSound('tap');
+    populateHistory();
+    document.getElementById('history-modal').classList.remove('hidden');
+  });
+  document.getElementById('btn-settings').addEventListener('click', () => {
+    playSound('tap');
+    document.getElementById('settings-modal').classList.remove('hidden');
+  });
+
+  // Settings modal
+  document.getElementById('btn-settings-help').addEventListener('click', () => {
+    playSound('tap');
+    document.getElementById('settings-modal').classList.add('hidden');
+    helpModal.classList.remove('hidden');
+  });
+  document.getElementById('btn-force-update').addEventListener('click', () => {
+    playSound('tap');
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(regs => regs.forEach(r => r.update()));
+    }
+    window.location.reload(true);
+  });
+  document.getElementById('btn-close-settings').addEventListener('click', () => {
+    playSound('tap');
+    document.getElementById('settings-modal').classList.add('hidden');
+  });
+
+  // Leaderboard modal
+  document.getElementById('btn-close-highscore').addEventListener('click', () => {
+    playSound('tap');
+    document.getElementById('highscore-modal').classList.add('hidden');
+  });
+  document.getElementById('tab-lb-today').addEventListener('click', () => switchLeaderboardTab('today'));
+  document.getElementById('tab-lb-alltime').addEventListener('click', () => switchLeaderboardTab('alltime'));
+  document.getElementById('btn-submit-score').addEventListener('click', submitHighScore);
+
+  // History modal
+  document.getElementById('btn-close-history').addEventListener('click', () => {
+    playSound('tap');
+    document.getElementById('history-modal').classList.add('hidden');
   });
 
   window.addEventListener('keydown', (e) => {
@@ -753,6 +813,117 @@
         if (installBtn) installBtn.classList.add('hidden');
       });
     });
+  }
+
+  // --- Word History Display ---
+  function populateHistory() {
+    const list = document.getElementById('history-list');
+    const empty = document.getElementById('history-empty');
+    if (!list) return;
+    list.innerHTML = '';
+    if (wordHistory.length === 0) {
+      if (empty) empty.classList.remove('hidden');
+      return;
+    }
+    if (empty) empty.classList.add('hidden');
+    const sorted = [...wordHistory].sort((a, b) => b.length - a.length || a.localeCompare(b));
+    sorted.forEach(word => {
+      const li = document.createElement('li');
+      li.textContent = `${word.toUpperCase()} (${word.length}L) — ${getWordScore(word)}pt`;
+      list.appendChild(li);
+    });
+  }
+
+  // --- Leaderboard ---
+  let currentLbTab = 'today';
+
+  function openLeaderboard(tab) {
+    document.getElementById('hs-local').textContent = highScore;
+    document.getElementById('highscore-modal').classList.remove('hidden');
+    switchLeaderboardTab(tab || 'today');
+  }
+
+  function switchLeaderboardTab(tab) {
+    currentLbTab = tab;
+    document.getElementById('tab-lb-today').classList.toggle('active', tab === 'today');
+    document.getElementById('tab-lb-alltime').classList.toggle('active', tab === 'alltime');
+    loadLeaderboard(tab);
+  }
+
+  async function loadLeaderboard(tab) {
+    const container = document.getElementById('lb-list-container');
+    if (!container) return;
+    container.innerHTML = '<p class="lb-msg">Loading scores…</p>';
+    if (!supabaseClient) {
+      container.innerHTML = '<p class="lb-msg">Online leaderboard not yet configured.</p>';
+      return;
+    }
+    try {
+      let query = supabaseClient.from('wordstring_scores').select('*');
+      if (tab === 'today') {
+        const cutoff = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+        query = query.gte('created_at', cutoff);
+      }
+      const { data, error } = await query.order('score', { ascending: false }).limit(20);
+      if (error) throw error;
+      container.innerHTML = '';
+      if (!data || data.length === 0) {
+        container.innerHTML = '<p class="lb-msg">No scores yet — be the first!</p>';
+        return;
+      }
+      data.forEach((item, i) => {
+        const rank = i + 1;
+        const date = new Date(item.created_at).toLocaleDateString([], { month: 'short', day: 'numeric' });
+        const div = document.createElement('div');
+        div.className = `lb-item${rank <= 3 ? ' lb-rank-' + rank : ''}`;
+        div.innerHTML = `<span class="lb-rank-num">${rank}</span><span class="lb-name">${escapeHTML(item.player_name)}</span><span class="lb-score">${item.score}pt</span><span class="lb-date">${date}</span>`;
+        container.appendChild(div);
+      });
+    } catch (err) {
+      console.error('Leaderboard load error:', err);
+      container.innerHTML = '<p class="lb-msg error">Failed to load scores.</p>';
+    }
+  }
+
+  async function submitHighScore() {
+    if (!supabaseClient) {
+      showSubmitStatus('Leaderboard not configured yet.', 'error');
+      return;
+    }
+    const nameInput = document.getElementById('player-name-input');
+    const name = nameInput ? nameInput.value.trim() : '';
+    if (!name) {
+      showSubmitStatus('Enter your name first!', 'error');
+      return;
+    }
+    const btn = document.getElementById('btn-submit-score');
+    if (btn) { btn.disabled = true; btn.textContent = '…'; }
+    if (nameInput) nameInput.disabled = true;
+    try {
+      const { error } = await supabaseClient.from('wordstring_scores').insert([{ player_name: name, score: totalScore }]);
+      if (error) throw error;
+      showSubmitStatus('Score posted! 🎉', 'success');
+      setTimeout(() => {
+        document.getElementById('game-over-modal').classList.add('hidden');
+        openLeaderboard('today');
+      }, 1200);
+    } catch (err) {
+      console.error('Score submit error:', err);
+      showSubmitStatus('Error posting score. Try again.', 'error');
+      if (btn) { btn.disabled = false; btn.textContent = 'Submit'; }
+      if (nameInput) nameInput.disabled = false;
+    }
+  }
+
+  function showSubmitStatus(msg, type) {
+    const el = document.getElementById('leaderboard-status');
+    if (!el) return;
+    el.textContent = msg;
+    el.className = `leaderboard-status ${type}`;
+  }
+
+  function escapeHTML(str) {
+    return String(str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   }
 
 })();

@@ -51,44 +51,35 @@
     <!-- Main Game Board (No scroll single screen layout) -->
     <main class="game-board">
       
-      <!-- Top Section: Companion Stringly (the Yarn mascot) -->
-      <section class="mascot-and-friends-panel">
-        
-        <div class="friends-container">
-          <!-- Stringly Companion -->
-          <div id="stringly-companion" class="stringly-companion idle">
-            <div class="stringly-body">
-              <div class="yarn-wraps">
-                <div class="yarn-wrap wrap-1"></div>
-                <div class="yarn-wrap wrap-2"></div>
-                <div class="yarn-wrap wrap-3"></div>
-              </div>
-              <div class="stringly-face">
-                <div class="stringly-eyes">
-                  <div class="button-eye eye-left">
-                    <div class="stitch-cross"></div>
-                  </div>
-                  <div class="button-eye eye-right">
-                    <div class="stitch-cross"></div>
-                  </div>
-                </div>
-                <div class="stringly-mouth"></div>
-              </div>
-            </div>
-            <!-- Loose yarn string ends for legs -->
-            <div class="stringly-leg leg-left"></div>
-            <div class="stringly-leg leg-right"></div>
-            
-            <!-- Speech Bubble -->
-            <div id="stringly-bubble" class="stringly-bubble hidden">
-              <span id="stringly-bubble-text">Stitch words!</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
       <!-- Center Section: Embroidery Hoop Board (Cross-stitch linen frame) -->
       <section class="board-panel">
+        <!-- Stringly mascot — anchored to bottom-left of board -->
+        <div id="stringly-companion" class="stringly-companion idle">
+          <div class="stringly-body">
+            <div class="yarn-wraps">
+              <div class="yarn-wrap wrap-1"></div>
+              <div class="yarn-wrap wrap-2"></div>
+              <div class="yarn-wrap wrap-3"></div>
+            </div>
+            <div class="stringly-face">
+              <div class="stringly-eyes">
+                <div class="button-eye eye-left">
+                  <div class="stitch-cross"></div>
+                </div>
+                <div class="button-eye eye-right">
+                  <div class="stitch-cross"></div>
+                </div>
+              </div>
+              <div class="stringly-mouth"></div>
+            </div>
+          </div>
+          <div class="stringly-leg leg-left"></div>
+          <div class="stringly-leg leg-right"></div>
+          <!-- Speech Bubble -->
+          <div id="stringly-bubble" class="stringly-bubble hidden">
+            <span id="stringly-bubble-text">Stitch words!</span>
+          </div>
+        </div>
         <div class="embroidery-hoop">
           <div class="hoop-inner-canvas">
             <div id="word-grid-container" class="word-grid-container">
@@ -225,13 +216,22 @@
     </div>
   </div>
 
-  <!-- High Scores Modal -->
+  <!-- Leaderboard Modal -->
   <div id="highscore-modal" class="modal-overlay hidden">
     <div class="modal-cardboard">
       <div class="highscore-content">
-        <h2>High Scores</h2>
-        <div class="hs-row"><span>🏆 Your Best</span><span id="hs-local">0</span></div>
-        <p class="hs-note">🌐 Online leaderboard coming soon!</p>
+        <h2>🏆 Leaderboard</h2>
+        <div class="hs-row">
+          <span>Your Best</span>
+          <span id="hs-local">0</span>
+        </div>
+        <div class="leaderboard-tabs">
+          <button id="tab-lb-today" class="tab-btn active">Today</button>
+          <button id="tab-lb-alltime" class="tab-btn">All Time</button>
+        </div>
+        <div id="lb-list-container" class="lb-list-container">
+          <!-- Dynamically populated -->
+        </div>
         <button id="btn-close-highscore" class="btn-craft btn-medium btn-primary">Close</button>
       </div>
     </div>
@@ -271,6 +271,15 @@
             <span class="vic-stat-label">Longest Word</span>
             <span id="longest-word" class="vic-stat-val">-</span>
           </div>
+        </div>
+
+        <div class="leaderboard-submission">
+          <h3>📋 Post Your Score</h3>
+          <div class="submission-row">
+            <input type="text" id="player-name-input" maxlength="15" placeholder="Your name">
+            <button id="btn-submit-score" class="btn-craft btn-small btn-primary">Submit</button>
+          </div>
+          <p id="leaderboard-status" class="leaderboard-status hidden"></p>
         </div>
 
         <p class="victory-cheer">Stringly is proud of you! 🪡🧶</p>
@@ -359,6 +368,7 @@
     </div>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="words.js?v=3"></script>
   <script src="game.js?v=3"></script>
 </body>
