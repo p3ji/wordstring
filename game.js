@@ -723,6 +723,10 @@ if (typeof supabase !== 'undefined') {
   document.getElementById('btn-close-highscore').addEventListener('click', () => {
     playSound('tap');
     document.getElementById('highscore-modal').classList.add('hidden');
+    // If game has ended, return to game-over modal so player can play again
+    if (!isGameActive && timeLeft <= 0) {
+      document.getElementById('game-over-modal').classList.remove('hidden');
+    }
   });
   document.getElementById('tab-lb-today').addEventListener('click', () => switchLeaderboardTab('today'));
   document.getElementById('tab-lb-alltime').addEventListener('click', () => switchLeaderboardTab('alltime'));
@@ -903,6 +907,7 @@ if (typeof supabase !== 'undefined') {
       const { error } = await supabaseClient.from('wordstring_scores').insert([{ player_name: name, score: totalScore }]);
       if (error) throw error;
       showSubmitStatus('Score posted! 🎉', 'success');
+      if (btn) { btn.textContent = 'Submitted ✓'; }
       setTimeout(() => {
         document.getElementById('game-over-modal').classList.add('hidden');
         openLeaderboard('today');
