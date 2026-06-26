@@ -1,6 +1,7 @@
 // --- SUPABASE CONFIGURATION ---
-const SUPABASE_URL = "https://heldymuibtnngfuubhlv.supabase.co";
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhlbGR5bXVpYnRubmdmdXViaGx2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIxNDM0MzcsImV4cCI6MjA5NzcxOTQzN30.FjVEuBy-fYOPcWyyggYAaCETr--RoerFpQ0W-cNxf4M";
+// Shared suite project (same as n-1game)
+const SUPABASE_URL = "https://wvzxkaaauxnqqubvebcp.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind2enhrYWFhdXhucXF1YnZlYmNwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIwMTg4OTUsImV4cCI6MjA5NzU5NDg5NX0.y44sxNqAwjXe4u2BdqaZ5cXQkPO497usoyC9tIRxxX8";
 let supabaseClient = null;
 if (typeof supabase !== 'undefined') {
   supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -863,7 +864,7 @@ if (typeof supabase !== 'undefined') {
       return;
     }
     try {
-      let query = supabaseClient.from('wordstring_scores').select('*');
+      let query = supabaseClient.from('high_scores').select('*').eq('app', 'wordstring');
       if (tab === 'today') {
         const cutoff = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
         query = query.gte('created_at', cutoff);
@@ -904,7 +905,7 @@ if (typeof supabase !== 'undefined') {
     if (btn) { btn.disabled = true; btn.textContent = '…'; }
     if (nameInput) nameInput.disabled = true;
     try {
-      const { error } = await supabaseClient.from('wordstring_scores').insert([{ player_name: name, score: totalScore }]);
+      const { error } = await supabaseClient.from('high_scores').insert([{ player_name: name, score: totalScore, app: 'wordstring' }]);
       if (error) throw error;
       showSubmitStatus('Score posted! 🎉', 'success');
       if (btn) { btn.textContent = 'Submitted ✓'; }
