@@ -1,0 +1,59 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - generic [ref=e6]:
+        - heading "N-1 Word Craft" [level=1] [ref=e7]:
+          - text: N-1
+          - generic [ref=e8]: Word Craft
+        - generic [ref=e9]:
+          - generic [ref=e10]:
+            - generic [ref=e11]: "Words:"
+            - generic [ref=e12]: "0"
+          - generic [ref=e13]:
+            - generic [ref=e14]: "Time:"
+            - generic [ref=e15]: 2:00
+          - generic [ref=e16]:
+            - generic [ref=e17]: "Bonus:"
+            - generic [ref=e18]: "0"
+        - generic [ref=e19]:
+          - button "Daily Leaderboard" [ref=e20] [cursor=pointer]: 🏆
+          - button "Attempt History" [ref=e21] [cursor=pointer]: 📜
+          - button "Settings/Menu" [ref=e23] [cursor=pointer]: ⚙️
+    - main [ref=e24]:
+      - generic [ref=e28]:
+        - 'heading "4-Letter Word: TIER" [level=2] [ref=e29]'
+        - generic [ref=e30]: 0 / 4
+      - generic [ref=e43]:
+        - generic [ref=e44]:
+          - generic "Roxy (the mailing tube)" [ref=e62]:
+            - generic [ref=e68]: Roxy
+          - button "GET HINT (1 left)" [ref=e69] [cursor=pointer]
+        - generic [ref=e71]:
+          - generic "Click to Submit" [ref=e72] [cursor=pointer]:
+            - generic [ref=e73]: "|"
+            - generic [ref=e74]: TAP TO SUBMIT
+          - generic [ref=e75] [cursor=pointer]: e
+          - generic [ref=e76] [cursor=pointer]: i
+          - generic [ref=e77] [cursor=pointer]: r
+          - generic [ref=e78] [cursor=pointer]: t
+        - generic [ref=e79]:
+          - button "Shuffle" [ref=e80] [cursor=pointer]
+          - button "Clear" [ref=e81] [cursor=pointer]
+          - button "SUBMIT" [ref=e82] [cursor=pointer]
+  - generic [ref=e86]:
+    - heading "N-1 Word Craft" [level=1] [ref=e87]:
+      - text: N-1
+      - generic [ref=e88]: Word Craft
+    - generic [ref=e105]: Hi! Let's craft words out of cardboard!
+    - generic [ref=e106]:
+      - paragraph [ref=e107]: 1. Find as many words as you can using the letters of the starter word.
+      - paragraph [ref=e108]: 2. Find all the words but 1 to move to the next level.
+      - paragraph [ref=e109]: 3. Find all the words to get the highest score!
+    - generic [ref=e110]:
+      - paragraph [ref=e112]: 📦 Play offline with full performance! Install N-1 Word Craft on your device.
+      - generic [ref=e113]:
+        - button "INSTALL" [ref=e114] [cursor=pointer]
+        - button "DISMISS" [ref=e115] [cursor=pointer]
+    - generic [ref=e116]:
+      - 'button "Easy Mode: OFF" [ref=e117] [cursor=pointer]'
+      - button "START CRAFTING" [ref=e118] [cursor=pointer]

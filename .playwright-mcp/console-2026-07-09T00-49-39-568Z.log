@@ -1,0 +1,6 @@
+[     648ms] [WARNING] <meta name="apple-mobile-web-app-capable" content="yes"> is deprecated. Please include <meta name="mobile-web-app-capable" content="yes"> @ http://localhost:5051/:0
+[     698ms] [INFO] Banner not shown: beforeinstallpromptevent.preventDefault() called. The page must call beforeinstallpromptevent.prompt() to show the banner. @ http://localhost:5051/:0
+[    1608ms] [WARNING] <meta name="apple-mobile-web-app-capable" content="yes"> is deprecated. Please include <meta name="mobile-web-app-capable" content="yes"> @ http://localhost:5051/:0
+[    1636ms] [INFO] Banner not shown: beforeinstallpromptevent.preventDefault() called. The page must call beforeinstallpromptevent.prompt() to show the banner. @ http://localhost:5051/:0
+[  145808ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://wvzxkaaauxnqqubvebcp.supabase.co/rest/v1/rejected_words?columns=%22word%22%2C%22starter%22%2C%22app%22:0
+[  145865ms] [WARNING] Rejection log failed: Could not find the table 'public.rejected_words' in the schema cache @ http://localhost:5051/game.js?v=46:1016

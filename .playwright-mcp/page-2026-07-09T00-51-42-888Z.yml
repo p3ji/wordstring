@@ -1,0 +1,42 @@
+- generic [ref=f1e2]:
+  - banner [ref=f1e3]:
+    - generic [ref=f1e6]:
+      - heading "N-1 Word Craft" [level=1] [ref=f1e7]:
+        - text: N-1
+        - generic [ref=f1e8]: Word Craft
+      - generic [ref=f1e9]:
+        - generic [ref=f1e10]:
+          - generic [ref=f1e11]: "Words:"
+          - generic [ref=f1e12]: "0"
+        - generic [ref=f1e13]:
+          - generic [ref=f1e14]: "Time:"
+          - generic [ref=f1e15]: 0:45
+        - generic [ref=f1e16]:
+          - generic [ref=f1e17]: "Bonus:"
+          - generic [ref=f1e18]: "0"
+      - generic [ref=f1e19]:
+        - button "Daily Leaderboard" [ref=f1e20] [cursor=pointer]: 🏆
+        - button "Attempt History" [ref=f1e21] [cursor=pointer]: 📜
+        - button "Settings/Menu" [ref=f1e23] [cursor=pointer]: ⚙️
+  - main [ref=f1e24]:
+    - generic [ref=f1e28]:
+      - 'heading "4-Letter Word: OPTS" [level=2] [ref=f1e121]'
+      - generic [ref=f1e30]: 0 / 8
+    - generic [ref=f1e45]:
+      - generic [ref=f1e46]:
+        - generic "Roxy (the mailing tube)" [ref=f1e64]:
+          - generic [ref=f1e70]: Roxy
+        - button "GET HINT (1 left)" [ref=f1e71] [cursor=pointer]
+      - generic [ref=f1e73]:
+        - generic "Click to Submit" [ref=f1e74] [cursor=pointer]:
+          - generic [ref=f1e143]: psto
+          - generic [ref=f1e75]: "|"
+          - generic [ref=f1e76]: TAP TO SUBMIT
+        - generic [ref=f1e139] [cursor=pointer]: t
+        - generic [ref=f1e140] [cursor=pointer]: p
+        - generic [ref=f1e141] [cursor=pointer]: o
+        - generic [ref=f1e142] [cursor=pointer]: s
+      - generic [ref=f1e81]:
+        - button "Shuffle" [ref=f1e82] [cursor=pointer]
+        - button "Clear" [ref=f1e83] [cursor=pointer]
+        - button "SUBMIT" [ref=f1e84] [cursor=pointer]
