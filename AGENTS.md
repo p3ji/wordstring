@@ -2,7 +2,7 @@
 
 > Single source of truth for *how to work on this repo*. Both Claude and Antigravity read this file (`CLAUDE.md` and `GEMINI.md` just point here). Keep it short.
 
-**Brain note (goals, backlog, full context):** `H:\My Drive\Brain2\Projects\wordstring.md`
+**Brain note (goals, backlog, full context):** [wordstring.md](file:///H:/My%20Drive/Brain2_backup/Projects/wordstring.md)
 **GitHub:** https://github.com/p3ji/wordstring
 
 ## Run / build / test
